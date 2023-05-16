@@ -11,8 +11,10 @@
   },
   "dependencies": {
     "amfe-flexible": "^2.2.1",
+    "crypto-js": "^4.1.1",
     "pinia": "^2.0.32",
-    "vue": "^3.2.47"
+    "vue": "^3.2.47",
+    "vue-router": "^4.2.0"
   },
   "devDependencies": {
     "@types/node": "^18.14.2",

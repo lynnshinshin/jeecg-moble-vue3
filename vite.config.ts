@@ -1,7 +1,7 @@
 /*
  * @Author: ZhouKaiBai
  * @Date: 2023-04-06 15:22:35
- * @LastEditTime: 2023-04-11 14:00:23
+ * @LastEditTime: 2023-05-16 14:50:46
  * @LastEditors: ZhouKaiBai
  * @Description: 
  */
@@ -16,6 +16,7 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
-    }
+    },
+    extensions: ['.js', '.ts', '.vue'] // 为了引入时不用写.vue后缀
   }
 })
