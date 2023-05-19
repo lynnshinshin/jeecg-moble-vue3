@@ -1,0 +1,28 @@
+
+:root {
+  --primary-color: #007bff;
+  --bg-color: #fff;
+  --font-color: #000;
+  --brightness: brightness(100%);
+}
+:root[data-theme="light"] {
+  --primary-color: #007bff;
+  --bg-color: #fff;
+  --font-color: #000;
+  --brightness: brightness(100%);
+}
+:root[data-theme="dark"] {
+  --primary-color: #dc3545;
+  --bg-color: #1f1f1f;
+  --font-color: #ccc;
+  --brightness: brightness(90%);
+  --el-color-primary: #0253dd;
+}
+body {
+  background-color: var(--bg-color);
+  color: var(--font-color);
+  transition: background-color 0.5s, color 0.5s;
+}
+img {
+  filter: var(--brightness);
+}
