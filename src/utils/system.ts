@@ -1,7 +1,7 @@
 /*
  * @Author: ZhouKaiBai
  * @Date: 2023-05-19 18:25:59
- * @LastEditTime: 2023-05-19 18:40:28
+ * @LastEditTime: 2023-05-19 19:28:27
  * @LastEditors: ZhouKaiBai
  * @Description: 系统工具类
  */
@@ -19,7 +19,6 @@ export function setTheme(theme: THEME) {
   document.documentElement.setAttribute('data-theme', theme)
   document.documentElement.classList.toggle(theme)
   localStorage.setItem('theme', theme)
-  console.log(localStorage.getItem('theme'));
 }
 /**
  * @description: 恢复设置的主题
@@ -27,7 +26,6 @@ export function setTheme(theme: THEME) {
  * @author: ZhouKaiBai
  */
 export function restoreTheme(): void {
-  console.log(localStorage.getItem('theme'));
   const theme = localStorage.getItem('theme')
   theme && setTheme(theme as THEME)
 }
