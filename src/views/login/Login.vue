@@ -1,7 +1,7 @@
 <!--
  * @Author: ZhouKaiBai
  * @Date: 2023-05-18 16:18:11
- * @LastEditTime: 2023-05-19 18:21:59
+ * @LastEditTime: 2023-05-23 17:20:09
  * @LastEditors: ZhouKaiBai
  * @Description: 
 -->
@@ -22,23 +22,34 @@
   </header>
   <!-- 表单 -->
   <main class="longin_form-bar">
-    <div :style="{ width: '6.67rem' }">
-      <el-form ref="loginFormRef" :model="loginForm" :rules="rules">
-        <el-form-item prop="username">
-          <el-input v-model="loginForm.username" placeholder="请输入登录账号" />
-        </el-form-item>
-        <el-form-item prop="password">
-          <el-input type="password" show-password v-model="loginForm.password" placeholder="请输入登录密码" />
-        </el-form-item>
-      </el-form>
+    <el-form ref="loginFormRef" :model="loginForm" :rules="rules" :style="{ width: '6.67rem' }">
+      <!-- 账号密码 -->
+      <el-form-item prop="username">
+        <el-input v-model="loginForm.username" placeholder="请输入登录账号" clearable />
+      </el-form-item>
+      <el-form-item prop="password">
+        <el-input type="password" show-password v-model="loginForm.password" clearable placeholder="请输入登录密码" />
+      </el-form-item>
+      <!-- 验证码 -->
       <el-row :gutter="20">
-        <el-col :span="12"><el-button :style="{ width: '100%' }" @click="resetForm(loginFormRef)">重置</el-button>
+        <el-col :span="12">
+          <el-form-item prop="captcha">
+            <el-input @keyup.enter="submitForm(loginFormRef)" v-model="loginForm.captcha" placeholder="请输入验证码" clearable />
+          </el-form-item>
         </el-col>
-        <el-col :span="12"><el-button :style="{ width: '100%' }" type="primary"
-            @click="submitForm(loginFormRef)">登录</el-button> </el-col>
+        <el-col :span="12"><img @click="getVerificationCode" :src="verificationSrc" class="longin_form-verification"
+            alt="验证码"></el-col>
       </el-row>
-    </div>
 
+      <!-- 按钮 -->
+      <el-row :gutter="20">
+        <el-col :span="24">
+          <el-button :style="{ width: '100%' }" type="primary" @click="submitForm(loginFormRef)">
+            登录
+          </el-button>
+        </el-col>
+      </el-row>
+    </el-form>
   </main>
 </template>
 
@@ -46,33 +57,75 @@
 import { reactive, ref } from 'vue'
 import type { FormInstance, FormRules } from 'element-plus'
 import SwitchTheme from '@/components/base/SwitchTheme.vue'
+import { apiGetVerificationCode, apiLogin, apiGetUserPermission } from '@/api/index'
+import useGlob from '@/hooks/useGlobal'
+import { useUserStore, useSystemStore } from '@/stores/index'
+const GLOB = useGlob()
+const userStore = useUserStore()
+const systemStore = useSystemStore()
 const loginFormRef = ref<FormInstance>()
 const loginForm = reactive({
   username: '',
-  password: ''
+  password: '',
+  captcha: '',
+  remember_me: true,
 })
 const rules = reactive<FormRules>({
   username: [{ required: true, message: '请输入登录账号', trigger: 'change' }],
-  password: [{ required: true, message: '请输入登录密码', trigger: 'change' }]
+  password: [{ required: true, message: '请输入登录密码', trigger: 'change' }],
+  captcha: [{ required: true, message: '请输入验证码', trigger: 'change' }]
 })
 const resetForm = (formEl: FormInstance | undefined) => {
   if (!formEl) return
   formEl.resetFields()
 }
-const submitForm = async (formEl: FormInstance | undefined) => {
+async function submitForm (formEl: FormInstance | undefined) {
   if (!formEl) return
   await formEl.validate((valid, fields) => {
     if (valid) {
-      console.log('submit!')
+      handleLogin()
     } else {
       console.log('error submit!', fields)
     }
   })
 }
+function handleLogin() {
+  apiLogin(loginForm).then(async (res: any) => {
+    GLOB.$message({
+      type: 'success',
+      message: '登录成功'
+    })
+    userStore.setUserInfo(res.result.userInfo)
+    userStore.setToken(res.result.token)
+    await getUserPermission()
+    GLOB.$router.push({
+      path: '/home'
+    })
+  }).catch((err) => {
+    getVerificationCode()
+    GLOB.$message({
+      type: 'error',
+      message: err.message || '登录失败'
+    })
+  })
+}
+let verificationSrc = ref<string>('')
+function getVerificationCode() {
+  apiGetVerificationCode().then((res: any) => {
+    verificationSrc.value = res.result
+    loginForm.captcha = ''
+  })
+}
+async function getUserPermission() {
+  const res: any = await apiGetUserPermission()
+  systemStore.setPermissionsList(res.result.menu)
+}
+getVerificationCode()
+
 </script>
 
 <style lang="scss" scoped>
-@media (max-width: 600px) {
+@media (max-width: 767px) {
   .login_nav-bar {
     display: flex;
     align-items: center;
@@ -80,6 +133,7 @@ const submitForm = async (formEl: FormInstance | undefined) => {
     border-bottom: 1px solid #eee;
     justify-content: space-between;
     padding: 0 0.13rem;
+    font-size: 0.8rem;
 
     .login_nav-left {
       display: flex;
@@ -123,7 +177,69 @@ const submitForm = async (formEl: FormInstance | undefined) => {
     align-items: center;
     justify-content: center;
   }
+
+  .longin_form-verification {
+    width: 100%;
+    height: 0.853rem;
+  }
 }
 
-@media (min-width: 601px) {}
+@media (min-width: 768px) {
+  .login_nav-bar {
+    display: flex;
+    align-items: center;
+    height: 1.33rem;
+    border-bottom: 1px solid #eee;
+    justify-content: space-between;
+    padding: 0 0.13rem;
+    font-size: 0.8rem;
+
+    .login_nav-left {
+      display: flex;
+      align-items: center;
+    }
+
+    .login_nav-logo {
+      height: 1.07rem;
+      width: 1.07rem;
+    }
+  }
+
+  .login_desc-bar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-top: 0.8rem;
+
+    .login_desc-title {
+      font-size: 24px;
+    }
+
+    .login_desc-text {
+      font-size: 0.43rem;
+      margin-top: 4.88px;
+      margin-bottom: 0.27rem;
+    }
+
+    .login_desc-bg {
+      width: 100%;
+      padding: 0 0.27rem;
+      box-sizing: border-box;
+    }
+  }
+
+  .longin_form-bar {
+    margin-top: 1.33rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .longin_form-verification {
+    width: 100%;
+    height: 0.853rem;
+  }
+}
 </style>

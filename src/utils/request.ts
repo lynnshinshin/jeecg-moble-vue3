@@ -1,10 +1,23 @@
-/*
- * @Author: ZhouKaiBai
- * @Date: 2023-05-19 18:50:35
- * @LastEditTime: 2023-05-19 19:26:34
- * @LastEditors: ZhouKaiBai
- * @Description: 
- */
-import axios from 'axios'
-const BASE_URL = import.meta.env.VITE_API_BASE_URL
-// TODO 封装接口请求
+import request from './axios'
+interface TypeRes {
+  code: number,
+  result: object
+  [name: string]: any
+}
+export interface TypeParams {
+  [name: string]: any
+}
+export function getRequest(url: string, params?: TypeParams) {
+  return request({
+    method: 'get',
+    url,
+    params
+  })
+}
+export function postRequest(url: string, data?: TypeParams) {
+  return request({
+    method: 'post',
+    url,
+    data
+  })
+}

@@ -11,11 +11,11 @@
 
 <script setup lang="ts">
 import { Sunny, MoonNight } from '@element-plus/icons-vue'
-import { setTheme, THEME } from '@/utils/system'
+import { setTheme, Theme } from '@/utils/system'
 import { ref, watchEffect } from 'vue'
-let isDark = ref(localStorage.getItem('theme') === THEME.dark ? true : false)
+let isDark = ref(localStorage.getItem('theme') === Theme.dark ? true : false)
 watchEffect(() => {
-  const theme = isDark.value ? THEME.dark : THEME.light
+  const theme = isDark.value ? Theme.dark : Theme.light
   setTheme(theme)
 })
 // document.documentElement.setAttribute('data-theme', 'dark')

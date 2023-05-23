@@ -8,17 +8,22 @@
 :root[data-theme="light"] {
   --primary-color: #007bff;
   --bg-color: #fff;
-  --font-color: #000;
+  --font-color: #303133;
   --brightness: brightness(100%);
 }
 :root[data-theme="dark"] {
-  --primary-color: #dc3545;
-  --bg-color: #1f1f1f;
+  --primary-color: #0253dd;
+  --bg-color: #242424;
   --font-color: #ccc;
   --brightness: brightness(90%);
-  --el-color-primary: #0253dd;
+  --el-color-primary: var(--primary-color);
+  --el-bg-color: var(--bg-color);
+  --el-bg-color-overlay: var(--bg-color);
+  --el-color-primary-light-9: #aaa;
+  --el-text-color-regular: var(--font-color);
+  --el-fill-color: var(--font-color);
 }
-body {
+:root {
   background-color: var(--bg-color);
   color: var(--font-color);
   transition: background-color 0.5s, color 0.5s;

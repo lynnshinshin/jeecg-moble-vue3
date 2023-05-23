@@ -1,2 +1,4 @@
 @import './base.css';
 @import './theme.css';
+@import "element-plus/theme-chalk/el-message.css"; /* 解决el-message无样式问题 */
+@import "element-plus/theme-chalk/el-message-box.css"; /* 解决el-message无样式问题 */
