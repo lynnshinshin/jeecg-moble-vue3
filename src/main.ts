@@ -1,10 +1,11 @@
 /*
  * @Author: ZhouKaiBai
  * @Date: 2023-04-06 15:22:36
- * @LastEditTime: 2023-05-23 10:40:34
+ * @LastEditTime: 2023-05-24 17:00:37
  * @LastEditors: ZhouKaiBai
  * @Description: 
  */
+import 'amfe-flexible/index.js'
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import App from './App.vue'

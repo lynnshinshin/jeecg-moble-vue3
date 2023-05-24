@@ -1,12 +1,14 @@
 /*
  * @Author: ZhouKaiBai
  * @Date: 2023-04-06 15:22:35
- * @LastEditTime: 2023-05-23 16:36:26
+ * @LastEditTime: 2023-05-23 18:45:41
  * @LastEditors: ZhouKaiBai
  * @Description: 
  */
 import { ref, computed, reactive } from 'vue'
 import { defineStore } from 'pinia'
+import { useSystemStore } from './systemStore'
+
 interface USER_TYPE {
   id: string,
   username: string,
@@ -32,10 +34,11 @@ export const useUserStore  = defineStore('userStore ', () => {
     token = value
     localStorage.setItem('token', value)
   }
-  // 清除用户信息和token
+  // 清除用户信息、token和权限列表信息
   function clearToken() {
     setToken('')
     setUserInfo({})
+    useSystemStore().setPermissionsList([])
   }
   return { getUserInfo, setUserInfo, getToken, setToken, clearToken }
 })

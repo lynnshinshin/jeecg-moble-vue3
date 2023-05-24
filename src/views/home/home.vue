@@ -1,7 +1,7 @@
 <!--
  * @Author: ZhouKaiBai
  * @Date: 2023-05-16 15:37:26
- * @LastEditTime: 2023-05-23 17:15:23
+ * @LastEditTime: 2023-05-24 18:05:34
  * @LastEditors: ZhouKaiBai
  * @Description: 
 -->
@@ -34,9 +34,12 @@
   </header>
   <!-- 菜单 -->
   <menu class="home_menu-bar">
-    <el-icon @click="menuDrawer = true">
-      <Expand />
-    </el-icon>
+    <div>
+      <el-icon @click="menuDrawer = true">
+        <Expand />
+      </el-icon>
+      <span class="home_menu-title">{{ MenuTitle }}</span>
+    </div>
     <div @click="handleBackToTop" :class="{ 'home_menu-top': true, 'home_menu-top-show': showBackToTop }">Back to top
     </div>
   </menu>
@@ -44,21 +47,26 @@
   <main class="home_main-bar">
     <el-skeleton :rows="25" animated />
   </main>
-
+  <!-- 侧边栏 -->
   <el-drawer v-model="menuDrawer" :show-close="false" direction="ltr" size="60%" :open-delay="0" :close-delay="0">
-    <el-skeleton :rows="25" animated />
+    <SideMenu @select-menu="menuDrawer = false"></SideMenu>
   </el-drawer>
 </template>
 
 <script setup lang="ts">
-import { ref, onUnmounted } from 'vue';
+import { ref, onUnmounted, computed } from 'vue';
 import SwitchTheme from '@/components/base/SwitchTheme.vue'
-import { useUserStore, useSystemStore } from '@/stores/index'
+import SideMenu from '@/components/menu/SideMenu.vue';
+import { useSystemStore, useUserStore } from '@/stores/index'
 import useGlob from '@/hooks/useGlobal'
+const systemStore = useSystemStore()
 const GLOB = useGlob()
 const userStore = useUserStore()
 let menuDrawer = ref<boolean>(false)
 let showBackToTop = ref<boolean>(false)
+const MenuTitle = computed(() => {
+  return systemStore.currentMenu.meta?.title
+})
 function controlBackToTop() {
   if (window.scrollY > 100) { // 当滚动超过50px时显示按钮
     showBackToTop.value = true
@@ -118,6 +126,9 @@ onUnmounted(() => {
     }
   }
 
+  :root[data-theme="dark"] .home_menu-bar {
+    backdrop-filter: saturate(50%) blur(8px) opacity(1);
+  }
   .home_menu-bar {
     position: sticky;
     top: 0;
@@ -129,6 +140,12 @@ onUnmounted(() => {
     padding: 0 0.21rem;
     font-size: 0.8rem;
     backdrop-filter: saturate(50%) blur(4px) opacity(99%);
+
+    .home_menu-title {
+      font-size: 16px;
+      vertical-align: text-top;
+      margin-left: 10px;
+    }
   }
 
   .home_main-bar {

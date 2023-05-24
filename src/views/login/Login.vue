@@ -1,7 +1,7 @@
 <!--
  * @Author: ZhouKaiBai
  * @Date: 2023-05-18 16:18:11
- * @LastEditTime: 2023-05-23 17:20:09
+ * @LastEditTime: 2023-05-23 19:24:33
  * @LastEditors: ZhouKaiBai
  * @Description: 
 -->
@@ -44,7 +44,7 @@
       <!-- 按钮 -->
       <el-row :gutter="20">
         <el-col :span="24">
-          <el-button :style="{ width: '100%' }" type="primary" @click="submitForm(loginFormRef)">
+          <el-button :loading="loginLoading" :style="{ width: '100%' }" type="primary" @click="submitForm(loginFormRef)">
             登录
           </el-button>
         </el-col>
@@ -89,7 +89,9 @@ async function submitForm (formEl: FormInstance | undefined) {
     }
   })
 }
+let loginLoading = ref<boolean>(false)
 function handleLogin() {
+  loginLoading.value = true
   apiLogin(loginForm).then(async (res: any) => {
     GLOB.$message({
       type: 'success',
@@ -98,6 +100,7 @@ function handleLogin() {
     userStore.setUserInfo(res.result.userInfo)
     userStore.setToken(res.result.token)
     await getUserPermission()
+    loginLoading.value = false
     GLOB.$router.push({
       path: '/home'
     })
@@ -107,6 +110,7 @@ function handleLogin() {
       type: 'error',
       message: err.message || '登录失败'
     })
+    loginLoading.value = false
   })
 }
 let verificationSrc = ref<string>('')

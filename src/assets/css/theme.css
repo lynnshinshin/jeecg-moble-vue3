@@ -12,16 +12,23 @@
   --brightness: brightness(100%);
 }
 :root[data-theme="dark"] {
-  --primary-color: #0253dd;
+  /* --primary-color: #0253dd; */
+  --primary-color: #00750d;
   --bg-color: #242424;
   --font-color: #ccc;
+  --active-font-color: #fff;
+  --acrive-bg-color: #3d3d3d;
+  /* --acrive-bg-color: var(--primary-color); */
   --brightness: brightness(90%);
   --el-color-primary: var(--primary-color);
   --el-bg-color: var(--bg-color);
   --el-bg-color-overlay: var(--bg-color);
-  --el-color-primary-light-9: #aaa;
+  --el-color-primary-light-9: var(--acrive-bg-color);
   --el-text-color-regular: var(--font-color);
+  --el-text-color-primary: var(--font-color);
   --el-fill-color: var(--font-color);
+  --el-fill-color-blank: var(--bg-color);
+  --el-menu-active-color: var(--active-font-color)
 }
 :root {
   background-color: var(--bg-color);
@@ -30,4 +37,7 @@
 }
 img {
   filter: var(--brightness);
+}
+:root[data-theme="dark"] .el-menu-item.is-active {
+  background-color: var(--acrive-bg-color);
 }
