@@ -1,7 +1,7 @@
 <!--
  * @Author: ZhouKaiBai
  * @Date: 2023-05-16 15:37:26
- * @LastEditTime: 2023-05-24 18:05:34
+ * @LastEditTime: 2023-05-26 17:17:38
  * @LastEditors: ZhouKaiBai
  * @Description: 
 -->
@@ -79,7 +79,7 @@ function handleBackToTop() {
 }
 function handleLogout() {
   userStore.clearToken()
-  GLOB.$router.push({
+  GLOB.$router?.push({
     path: '/login'
   })
 }

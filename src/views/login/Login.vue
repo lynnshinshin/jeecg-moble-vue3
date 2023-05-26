@@ -57,7 +57,7 @@
 import { reactive, ref } from 'vue'
 import type { FormInstance, FormRules } from 'element-plus'
 import SwitchTheme from '@/components/base/SwitchTheme.vue'
-import { apiGetVerificationCode, apiLogin, apiGetUserPermission } from '@/api/index'
+import { apiGetVerificationCode, apiLogin, apiGetUserPermission } from '@/api/systemApi'
 import useGlob from '@/hooks/useGlobal'
 import { useUserStore, useSystemStore } from '@/stores/index'
 const GLOB = useGlob()

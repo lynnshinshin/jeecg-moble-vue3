@@ -28,6 +28,7 @@ declare module '@vue/runtime-core' {
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SideMenu: typeof import('./src/components/menu/SideMenu.vue')['default']
+    Skeleton: typeof import('./src/components/base/Skeleton.vue')['default']
     SwitchTheme: typeof import('./src/components/base/SwitchTheme.vue')['default']
   }
 }

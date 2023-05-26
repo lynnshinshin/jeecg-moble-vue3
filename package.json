@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --open",
+    "serve": "vite --open --host 172.168.1.19 --port 3002",
     "build": "run-p type-check build-only",
     "preview": "vite preview",
     "build-only": "vite build",
@@ -12,6 +13,7 @@
   "dependencies": {
     "amfe-flexible": "^2.2.1",
     "axios": "^1.4.0",
+    "echarts": "^5.4.2",
     "element-plus": "^2.3.4",
     "pinia": "^2.0.32",
     "sass": "^1.62.1",

@@ -13,7 +13,7 @@
 }
 :root[data-theme="dark"] {
   /* --primary-color: #0253dd; */
-  --primary-color: #00750d;
+  /* --primary-color: #00750d; */
   --bg-color: #242424;
   --font-color: #ccc;
   --active-font-color: #fff;

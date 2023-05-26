@@ -1,16 +1,13 @@
 /*
  * @Author: ZhouKaiBai
  * @Date: 2023-05-19 18:25:59
- * @LastEditTime: 2023-05-23 17:10:48
+ * @LastEditTime: 2023-05-26 17:26:27
  * @LastEditors: ZhouKaiBai
  * @Description: 系统工具类
  */
 import { showToast, showSuccessToast, showFailToast, setToastDefaultOptions } from 'vant'
 import { ElMessage } from 'element-plus'
-enum Theme {
-  light = 'light',
-  dark = 'dark'
-}
+import { Theme } from '@/types/system';
 /**
  * @description: 切换主题
  * @param {Theme} theme
@@ -63,9 +60,9 @@ interface MESSAGE {
  * @return {*}
  * @author: ZhouKaiBai
  */
-function $message(options: MESSAGE):void {
+function $message(options: MESSAGE): void {
   const isMobile = isMobileDevice()
-  if(!isMobile) {
+  if (!isMobile) {
     ElMessage(options)
     return
   } else {
@@ -88,4 +85,4 @@ function loadCSSOnMobile() {
   }
 }
 
-export { Theme, setTheme, restoreTheme, isMobileDevice, $message, loadCSSOnMobile }
+export { setTheme, restoreTheme, isMobileDevice, $message, loadCSSOnMobile }

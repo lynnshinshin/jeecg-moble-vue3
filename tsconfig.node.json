@@ -2,7 +2,7 @@
   "extends": "@vue/tsconfig/tsconfig.node.json",
   "include": ["vite.config.*", "vitest.config.*", "cypress.config.*", "playwright.config.*"],
   "compilerOptions": {
-    "target": "ES2016",  
+    "target": "ES2015",  
     "lib": ["ES2018", "dom"],
     "ignoreDeprecations": "5.0",
     "composite": true,
