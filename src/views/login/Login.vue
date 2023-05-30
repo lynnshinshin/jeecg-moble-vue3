@@ -1,7 +1,7 @@
 <!--
  * @Author: ZhouKaiBai
  * @Date: 2023-05-18 16:18:11
- * @LastEditTime: 2023-05-23 19:24:33
+ * @LastEditTime: 2023-05-30 18:22:28
  * @LastEditors: ZhouKaiBai
  * @Description: 
 -->
@@ -14,43 +14,47 @@
     </div>
     <SwitchTheme />
   </nav>
-  <!-- 描述和图片 -->
-  <header class="login_desc-bar">
-    <h4 class="login_desc-title">Jeecg-mobile</h4>
-    <span class="login_desc-text">Jeecg mobile terminal by Vue3 & TypeScript</span>
-    <img class="login_desc-bg" src="@/assets/img/login/login-bg.png" alt="登录页图片">
-  </header>
-  <!-- 表单 -->
-  <main class="longin_form-bar">
-    <el-form ref="loginFormRef" :model="loginForm" :rules="rules" :style="{ width: '6.67rem' }">
-      <!-- 账号密码 -->
-      <el-form-item prop="username">
-        <el-input v-model="loginForm.username" placeholder="请输入登录账号" clearable />
-      </el-form-item>
-      <el-form-item prop="password">
-        <el-input type="password" show-password v-model="loginForm.password" clearable placeholder="请输入登录密码" />
-      </el-form-item>
-      <!-- 验证码 -->
-      <el-row :gutter="20">
-        <el-col :span="12">
-          <el-form-item prop="captcha">
-            <el-input @keyup.enter="submitForm(loginFormRef)" v-model="loginForm.captcha" placeholder="请输入验证码" clearable />
-          </el-form-item>
-        </el-col>
-        <el-col :span="12"><img @click="getVerificationCode" :src="verificationSrc" class="longin_form-verification"
-            alt="验证码"></el-col>
-      </el-row>
+  <div class="login-content-bar">
+    <!-- 描述和图片 -->
+    <header class="login_desc-bar">
+      <h4 class="login_desc-title">Jeecg-mobile</h4>
+      <span class="login_desc-text">Jeecg mobile terminal by Vue3 & TypeScript</span>
+      <img class="login_desc-bg" src="@/assets/img/login/login-bg.png" alt="登录页图片">
+    </header>
+    <!-- 表单 -->
+    <main class="longin_form-bar">
+      <el-form ref="loginFormRef" :model="loginForm" :rules="rules" :style="{ width: '6.67rem' }">
+        <!-- 账号密码 -->
+        <el-form-item prop="username">
+          <el-input v-model="loginForm.username" placeholder="请输入登录账号" clearable />
+        </el-form-item>
+        <el-form-item prop="password">
+          <el-input type="password" show-password v-model="loginForm.password" clearable placeholder="请输入登录密码" />
+        </el-form-item>
+        <!-- 验证码 -->
+        <el-row :gutter="20">
+          <el-col :span="12">
+            <el-form-item prop="captcha">
+              <el-input @keyup.enter="submitForm(loginFormRef)" v-model="loginForm.captcha" placeholder="请输入验证码"
+                clearable />
+            </el-form-item>
+          </el-col>
+          <el-col :span="12"><img @click="getVerificationCode" :src="verificationSrc" class="longin_form-verification"
+              alt="验证码"></el-col>
+        </el-row>
 
-      <!-- 按钮 -->
-      <el-row :gutter="20">
-        <el-col :span="24">
-          <el-button :loading="loginLoading" :style="{ width: '100%' }" type="primary" @click="submitForm(loginFormRef)">
-            登录
-          </el-button>
-        </el-col>
-      </el-row>
-    </el-form>
-  </main>
+        <!-- 按钮 -->
+        <el-row :gutter="20">
+          <el-col :span="24">
+            <el-button :loading="loginLoading" :style="{ width: '100%' }" type="primary"
+              @click="submitForm(loginFormRef)">
+              登录
+            </el-button>
+          </el-col>
+        </el-row>
+      </el-form>
+    </main>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -79,7 +83,7 @@ const resetForm = (formEl: FormInstance | undefined) => {
   if (!formEl) return
   formEl.resetFields()
 }
-async function submitForm (formEl: FormInstance | undefined) {
+async function submitForm(formEl: FormInstance | undefined) {
   if (!formEl) return
   await formEl.validate((valid, fields) => {
     if (valid) {
@@ -101,7 +105,7 @@ function handleLogin() {
     userStore.setToken(res.result.token)
     await getUserPermission()
     loginLoading.value = false
-    GLOB.$router.push({
+    GLOB.$router?.push({
       path: '/home'
     })
   }).catch((err) => {
@@ -129,121 +133,114 @@ getVerificationCode()
 </script>
 
 <style lang="scss" scoped>
-@media (max-width: 767px) {
-  .login_nav-bar {
-    display: flex;
-    align-items: center;
-    height: 1.33rem;
-    border-bottom: 1px solid #eee;
-    justify-content: space-between;
-    padding: 0 0.13rem;
-    font-size: 0.8rem;
+@import '@/assets/css/media.scss';
 
-    .login_nav-left {
-      display: flex;
-      align-items: center;
-    }
-
-    .login_nav-logo {
-      height: 1.07rem;
-      width: 1.07rem;
-    }
+.login_nav-bar {
+  @include use-media('desktop') {
+    padding: 0 15Px;
+    font-size: 30Px;
+    height: 60Px;
   }
 
-  .login_desc-bar {
+  display: flex;
+  align-items: center;
+  height: 50px;
+  border-bottom: 1px solid #eee;
+  justify-content: space-between;
+  padding: 0 20px;
+  font-size: 30px;
+
+  .login_nav-left {
     display: flex;
-    flex-direction: column;
     align-items: center;
-    justify-content: center;
-    padding-top: 0.8rem;
-
-    .login_desc-title {
-      font-size: 24px;
-    }
-
-    .login_desc-text {
-      font-size: 0.43rem;
-      margin-top: 4.88px;
-      margin-bottom: 0.27rem;
-    }
-
-    .login_desc-bg {
-      width: 100%;
-      padding: 0 0.27rem;
-      box-sizing: border-box;
-    }
   }
 
-  .longin_form-bar {
-    margin-top: 1.33rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
+  .login_nav-logo {
+    height: 40px;
+    width: 40px;
 
-  .longin_form-verification {
-    width: 100%;
-    height: 0.853rem;
+    @include use-media('desktop') {
+      height: 40Px;
+      width: 40Px;
+    }
   }
 }
 
-@media (min-width: 768px) {
-  .login_nav-bar {
+.login-content-bar {
+  @include use-media('desktop') {
+    position: relative;
+    margin-top: 60px;
     display: flex;
-    align-items: center;
-    height: 1.33rem;
-    border-bottom: 1px solid #eee;
     justify-content: space-between;
-    padding: 0 0.13rem;
-    font-size: 0.8rem;
+    width: 900Px;
+    height: 600px;
+    margin: 60Px auto;
+    border-radius: 20px;
+    box-shadow: 2Px 2Px 6Px rgba(0, 0, 0, 0.5), -4Px -4Px 8Px rgba(255, 255, 255, 0.1);
+  }
+}
 
-    .login_nav-left {
-      display: flex;
-      align-items: center;
-    }
+.login_desc-bar {
+  @include use-media('desktop') {
+    width: 500px;
+  }
 
-    .login_nav-logo {
-      height: 1.07rem;
-      width: 1.07rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-top: 30px;
+
+  .login_desc-title {
+    font-size: 28px;
+
+    @include use-media('desktop') {
+      font-size: 35px;
+      position: absolute;
+      top: 60Px;
     }
   }
 
-  .login_desc-bar {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding-top: 0.8rem;
+  .login_desc-text {
+    font-size: 16px;
+    margin-top: 4.88px;
+    margin-bottom: 0.27rem;
 
-    .login_desc-title {
-      font-size: 24px;
-    }
-
-    .login_desc-text {
-      font-size: 0.43rem;
-      margin-top: 4.88px;
-      margin-bottom: 0.27rem;
-    }
-
-    .login_desc-bg {
-      width: 100%;
-      padding: 0 0.27rem;
-      box-sizing: border-box;
+    @include use-media('desktop') {
+      position: absolute;
+      top: 120Px;
     }
   }
 
-  .longin_form-bar {
-    margin-top: 1.33rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+  .login_desc-bg {
+    width: 375px;
+    padding: 0 0.27rem;
+    box-sizing: border-box;
+
+    @include use-media('desktop') {
+      width: 60%;
+      position: absolute;
+      left: 0;
+      top: 180Px;
+    }
+  }
+}
+
+.longin_form-bar {
+  @include use-media('desktop') {
+    width: 400px;
+    position: relative;
   }
 
-  .longin_form-verification {
-    width: 100%;
-    height: 0.853rem;
-  }
+  margin-top: 1.33rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.longin_form-verification {
+  width: 100%;
+  height: 0.853rem;
 }
 </style>

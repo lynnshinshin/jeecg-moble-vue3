@@ -1,0 +1,38 @@
+$medias: (
+  'phone': (280Px, 700.99Px),
+  'pad': (701Px, 1024.99Px),
+  'desktop': 1025Px
+);
+
+@mixin use-media($medianame: 'phone') {
+  $media-width: map-get($medias, $medianame);
+  
+  @if $media-width == null {
+    @error 'Invalid media name: #{$medianame}.';
+  }
+
+  @if length($media-width) == 2 {
+    $min: nth($media-width, 1);
+    $max: nth($media-width, 2);
+    @media (min-width: $min) and (max-width: $max) {
+      @content;
+    }
+  }
+  @else {
+    $min: $media-width;
+    @media (min-width: $min) {
+      @content;
+    }
+  }
+}
+
+@include use-media('pad') {
+  html {
+    font-size: 50Px !important;
+  }
+}
+@include use-media('desktop') {
+  html {
+    font-size: 37.6Px !important;
+  }
+}

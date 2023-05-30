@@ -1,7 +1,7 @@
 <!--
  * @Author: ZhouKaiBai
  * @Date: 2023-05-16 15:37:26
- * @LastEditTime: 2023-05-26 17:17:38
+ * @LastEditTime: 2023-05-30 18:23:08
  * @LastEditors: ZhouKaiBai
  * @Description: 
 -->
@@ -45,6 +45,7 @@
   </menu>
   <!-- 内容 -->
   <main class="home_main-bar">
+    <LineChart></LineChart>
     <el-skeleton :rows="25" animated />
   </main>
   <!-- 侧边栏 -->
@@ -57,6 +58,7 @@
 import { ref, onUnmounted, computed } from 'vue';
 import SwitchTheme from '@/components/base/SwitchTheme.vue'
 import SideMenu from '@/components/menu/SideMenu.vue';
+import LineChart from '@/components/echarts/Linechart.vue'
 import { useSystemStore, useUserStore } from '@/stores/index'
 import useGlob from '@/hooks/useGlobal'
 const systemStore = useSystemStore()
@@ -90,82 +92,82 @@ onUnmounted(() => {
 </script>
 
 <style scoped lang="scss">
-@media (max-width: 767px) {
-  .home_header-bar {
+.home_header-bar {
+  display: flex;
+  align-items: center;
+  height: 50px;
+  border-bottom: 1px solid #eee;
+  justify-content: space-between;
+  padding: 0 8px;
+  font-size: 24px;
+
+  .home_header-left {
     display: flex;
     align-items: center;
-    height: 50px;
-    border-bottom: 1px solid #eee;
-    justify-content: space-between;
-    padding: 0 8px;
+  }
+
+  .home_header-right {
+    display: flex;
+    align-items: center;
+  }
+
+  .home_header-logo {
+    vertical-align: bottom;
+    height: 1.07rem;
+    width: 1.07rem;
+  }
+
+  .home_header-name {
+    vertical-align: bottom;
+  }
+
+  .home_header-menu {
+    margin-left: 15px;
     font-size: 24px;
-
-    .home_header-left {
-      display: flex;
-      align-items: center;
-    }
-
-    .home_header-right {
-      display: flex;
-      align-items: center;
-    }
-
-    .home_header-logo {
-      vertical-align: bottom;
-      height: 1.07rem;
-      width: 1.07rem;
-    }
-
-    .home_header-name {
-      vertical-align: bottom;
-    }
-
-    .home_header-menu {
-      margin-left: 15px;
-      font-size: 24px;
-    }
   }
+}
 
-  :root[data-theme="dark"] .home_menu-bar {
-    backdrop-filter: saturate(50%) blur(8px) opacity(1);
-  }
-  .home_menu-bar {
-    position: sticky;
-    top: 0;
-    display: flex;
-    align-items: center;
-    height: 50px;
-    border-bottom: 1px solid #eee;
-    justify-content: space-between;
-    padding: 0 0.21rem;
-    font-size: 0.8rem;
-    backdrop-filter: saturate(50%) blur(4px) opacity(99%);
+:root[data-theme="dark"] .home_menu-bar {
+  backdrop-filter: saturate(50%) blur(8px) opacity(1);
+}
 
-    .home_menu-title {
-      font-size: 16px;
-      vertical-align: text-top;
-      margin-left: 10px;
-    }
-  }
+.home_menu-bar {
+  position: sticky;
+  z-index: 1;
+  top: 0;
+  display: flex;
+  align-items: center;
+  height: 50px;
+  border-bottom: 1px solid #eee;
+  justify-content: space-between;
+  padding: 0 0.21rem;
+  font-size: 0.8rem;
+  backdrop-filter: saturate(50%) blur(4px) opacity(99%);
 
-  .home_main-bar {
-    padding: 0 10px;
-  }
-
-  .home_menu-top {
+  .home_menu-title {
     font-size: 16px;
+    vertical-align: text-top;
+    margin-left: 10px;
   }
+}
 
-  .home_menu-top {
-    transform: translateY(100%);
-    opacity: 0;
-    transition: all 0.1s;
-  }
+.home_main-bar {
+  padding: 0 10px;
+}
 
-  .home_menu-top-show {
-    transform: translateY(0);
-    opacity: 1;
-    transition: all 0.1s;
-  }
+.home_menu-top {
+  font-size: 16px;
+}
+
+.home_menu-top {
+  transform: translateY(100%);
+  opacity: 0;
+  transition: all 0.1s;
+}
+
+.home_menu-top-show {
+  transform: translateY(0);
+  opacity: 1;
+  transition: all 0.1s;
 }
 </style>

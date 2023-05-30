@@ -9,6 +9,7 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    Charts: typeof import('./src/components/echarts/charts.vue')['default']
     ElButton: typeof import('element-plus/es')['ElButton']
     ElCol: typeof import('element-plus/es')['ElCol']
     ElDrawer: typeof import('element-plus/es')['ElDrawer']
@@ -25,6 +26,8 @@ declare module '@vue/runtime-core' {
     ElSkeleton: typeof import('element-plus/es')['ElSkeleton']
     ElSubMenu: typeof import('element-plus/es')['ElSubMenu']
     ElSwitch: typeof import('element-plus/es')['ElSwitch']
+    Linechart: typeof import('./src/components/echarts/Linechart.vue')['default']
+    LineChart: typeof import('./src/components/charts/LineChart.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SideMenu: typeof import('./src/components/menu/SideMenu.vue')['default']

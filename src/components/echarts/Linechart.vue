@@ -1,7 +1,7 @@
 <!--
  * @Author: ZhouKaiBai
  * @Date: 2023-05-26 10:51:36
- * @LastEditTime: 2023-05-26 18:40:57
+ * @LastEditTime: 2023-05-26 19:26:09
  * @LastEditors: ZhouKaiBai
  * @Description: 
 -->
@@ -12,8 +12,9 @@
 
 <script setup lang="ts">
 import * as echarts from 'echarts/core';
-import { onMounted, onUnmounted, ref, watchEffect } from 'vue';
+import { onMounted, onUnmounted, ref } from 'vue';
 import { useSystemStore } from '@/stores';
+import { useThemeChange } from '@/hooks/useSystem'
 const useSystem = useSystemStore()
 const chartDom = ref<HTMLElement | null>(null);
 let myChart: echarts.ECharts
@@ -35,11 +36,16 @@ const options: EChartsOption = {
 function resize() {
   myChart.resize()
 }
+function initChart() {
+  myChart = echarts.init(chartDom.value as HTMLElement, useSystem.theme);
+  myChart.setOption(options)
+}
+useThemeChange(() => {
+  myChart.dispose()
+  initChart()
+})
 onMounted(() => {
-  watchEffect(() => {
-    myChart = echarts.init(chartDom.value as HTMLElement, useSystem.theme);
-    myChart.setOption(options)
-  })
+  initChart()
   window.addEventListener('resize', resize)
 })
 onUnmounted(() => {
@@ -72,7 +78,7 @@ onUnmounted(() => {
 
 <style scoped>
 .chart_content-bar {
-  width: 300px;
-  height: 300px;
+  width: initial;
+  aspect-ratio: 3/2;
 }
 </style>
