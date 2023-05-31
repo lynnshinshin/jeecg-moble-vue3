@@ -1,3 +1,10 @@
+/*
+ * @Author: ZhouKaiBai
+ * @Date: 2023-05-23 17:40:30
+ * @LastEditTime: 2023-05-31 17:45:15
+ * @LastEditors: ZhouKaiBai
+ * @Description: 
+ */
 import { whiteList } from '@/router/routes'
 import router from '@/router'
 import type { RouteLocationNormalized, NavigationGuardNext, Router, RouteRecordRaw } from 'vue-router'
@@ -13,7 +20,7 @@ interface RouteConfig {
  * @author: ZhouKaiBai
  */
 export function isWhiteList(path: string): boolean {
-  return whiteList.includes(path)
+  return whiteList.includes(path) || path.includes('sub')
 }
 /**
  * @description: 判断跳转的路由路径是否存在
@@ -23,6 +30,7 @@ export function isWhiteList(path: string): boolean {
  * @author: ZhouKaiBai
  */
 export function isPathExists<T extends RouteConfig>(path: string, routes: T[]): boolean {
+  if(path.includes('sub')) return true
   for (const route of routes) {
     if (route.path === path) {
       return true; // 找到匹配的路径，返回 true

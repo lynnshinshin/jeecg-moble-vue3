@@ -1,7 +1,7 @@
 <!--
  * @Author: ZhouKaiBai
  * @Date: 2023-05-16 15:37:26
- * @LastEditTime: 2023-05-30 18:23:08
+ * @LastEditTime: 2023-05-31 17:11:07
  * @LastEditors: ZhouKaiBai
  * @Description: 
 -->
@@ -34,7 +34,7 @@
   </header>
   <!-- 菜单 -->
   <menu class="home_menu-bar">
-    <div>
+    <div class="home_menu-left">
       <el-icon @click="menuDrawer = true">
         <Expand />
       </el-icon>
@@ -45,8 +45,8 @@
   </menu>
   <!-- 内容 -->
   <main class="home_main-bar">
-    <LineChart></LineChart>
-    <el-skeleton :rows="25" animated />
+    <router-view></router-view>
+    <!-- <LineChart></LineChart> -->
   </main>
   <!-- 侧边栏 -->
   <el-drawer v-model="menuDrawer" :show-close="false" direction="ltr" size="60%" :open-delay="0" :close-delay="0">
@@ -58,7 +58,7 @@
 import { ref, onUnmounted, computed } from 'vue';
 import SwitchTheme from '@/components/base/SwitchTheme.vue'
 import SideMenu from '@/components/menu/SideMenu.vue';
-import LineChart from '@/components/echarts/Linechart.vue'
+// import LineChart from '@/components/echarts/Linechart.vue'
 import { useSystemStore, useUserStore } from '@/stores/index'
 import useGlob from '@/hooks/useGlobal'
 const systemStore = useSystemStore()
@@ -143,10 +143,12 @@ onUnmounted(() => {
   padding: 0 0.21rem;
   font-size: 0.8rem;
   backdrop-filter: saturate(50%) blur(4px) opacity(99%);
-
+  .home_menu-left {
+    display: flex;
+    align-items: center;
+  }
   .home_menu-title {
     font-size: 16px;
-    vertical-align: text-top;
     margin-left: 10px;
   }
 }

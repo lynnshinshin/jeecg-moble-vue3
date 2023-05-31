@@ -1,12 +1,13 @@
 /*
  * @Author: ZhouKaiBai
  * @Date: 2023-04-06 15:22:36
- * @LastEditTime: 2023-05-30 14:06:52
+ * @LastEditTime: 2023-05-30 18:33:56
  * @LastEditors: ZhouKaiBai
  * @Description: 
  */
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
+import microApp from '@micro-zoe/micro-app'
 import App from './App.vue'
 import router from '@/router'
 import 'amfe-flexible/index.js'
@@ -24,3 +25,4 @@ app.use(createPinia())
 app.use(router)
 app.use(installELIcon)
 app.mount('#app')
+microApp.start()
